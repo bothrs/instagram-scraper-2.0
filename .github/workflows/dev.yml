@@ -12,7 +12,7 @@ jobs:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
     env:
-      PROJECT_ID: thomasmaclean
+      PROJECT_ID: shopify-store-locator-300908
       RUN_REGION: europe-west1
       SERVICE_NAME: instagram-scraper
     steps:
@@ -32,7 +32,7 @@ jobs:
           version: "286.0.0"
           service_account_email: ${{ secrets.RUN_SA_EMAIL }}
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
-          project_id: thomasmaclean
+          project_id: shopify-store-locator-300908
       - name: Build Docker Image
         run: docker build . -t "eu.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
       - name: Authenticate for gcr
