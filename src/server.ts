@@ -129,7 +129,25 @@ app.get("/pictures/:user", async (req: Request, res: Response) => {
       filterByFormula: `{Name} = "${user}"`,
     })
     .all();
+
   res.json({ user, results: (results || []).map((x) => x.fields) });
+});
+
+app.post("/profiles", async (req: Request, res: Response) => {
+  const profileName = req.body.name;
+
+  const results = await base("profiles")
+    .select({
+      filterByFormula: `{Name} = "${profileName}"`,
+    })
+    .all();
+
+  if (results.length > 0) {
+    return res.status(406).send("Profile is already added");
+  }
+
+  await base("profiles").create([{ fields: { Name: profileName } }]);
+  res.status(201).send("Added profile");
 });
 
 app.get("/test", async (req: Request, res: Response) => {
